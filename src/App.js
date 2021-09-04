@@ -11,36 +11,35 @@ import getCategories from "./getCategories";
 import getActivities from "./getActivities";
 import AdminPanel from "./components/adminPanel";
 import { useEffect, useState } from "react";
+import ApiCallMaker from "./ApiCallMaker";
 import axios from "axios";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [activities, setActivities] = useState([]);
 
-  useEffect(() => {});
+  const endpoint = "http://localhost:3000/SportsStore/api";
 
-  const endpoint = "";
+  const productsApi = new ApiCallMaker(
+    `${endpoint}/products`,
+    products,
+    setProducts
+  );
 
-  const handleGetProducts = async () => {
-    const { data: product } = await axios.get(endpoint);
-    console.log(data);
-  };
+  const activitiesApi = new ApiCallMaker(
+    `${endpoint}/activities`,
+    activities,
+    setActivities
+  );
 
-  const handleCreateProduct = async (product) => {
-    const { data } = await axios.post(endpoint, product);
-    console.log(data);
-  };
+  useEffect(async () => {
+    async function fetchData() {
+      await activitiesApi.get();
+      await productsApi.get();
+    }
+    await fetchData();
 
-  const handleUpdateProduct = async (product) => {
-    const { data } = await axios.put(`${endpoint}/${product.id}`, product);
-    console.log(data);
-  };
-
-  const handleDeleteProduct = async (id) => {
-    await axios.delete(`${endpoint}/${id}`);
-    console.log("deleted");
-  };
-
- 
+  }, []);
 
   return (
     <div>
