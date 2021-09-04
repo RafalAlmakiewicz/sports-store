@@ -49,22 +49,29 @@ function App() {
         <Route
           path="/productForm/:id?"
           render={(props) => {
-            const {id} = useParams()
-            return (<ProductForm
+            return (
+              <ProductForm
+                activities={activities}
+                product={
+                  products.filter((p) => p._id === props.match.params.id)[0]
+                }
+                onCreateProduct={productsApi.create}
+                onUpdateProduct={productsApi.update}
               {...props}
-              activities={getActivities()}
-              product={...products.filter(p => p.id === id)}
-            />)
+              />
+            );
           }}
         />
         <Route
           path="/admin"
           render={(props) => (
             <AdminPanel
-              onGetProducts={handleGetProducts}
-              onCreateProduct={handleCreateProduct}
-              onUpdateProduct={handleUpdateProduct}
-              onDeleteProduct={handleDeleteProduct}
+              products={products}
+              onDeleteProduct={productsApi.delete}
+              {...props}
+            />
+          )}
+        />
               {...props}
             />
           )}

@@ -2,11 +2,12 @@ import React from "react";
 import ProductForm from "./productForm";
 import { NavLink, Link } from "react-router-dom";
 
-const AdminPanel = ({ onGetProducts, onDeleteProduct, onUpdateProduct }) => {
+const AdminPanel = ({ products, onDeleteProduct }) => {
+  console.log(products);
   return (
     <React.Fragment>
       <nav>
-        <NavLink to="/productForm">New Item</NavLink>
+        <Link to="/productForm">New Item</Link>
       </nav>
       <table>
         <thead>
@@ -14,28 +15,28 @@ const AdminPanel = ({ onGetProducts, onDeleteProduct, onUpdateProduct }) => {
             <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Activity</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {products.map((p) => (
-              <tr key={p.id}>
-                <td>{p.name}</td>
-                <td>{p.price}</td>
-                <td>{p.stock}</td>
-                <td>
-                  <Link to={`/productForm/${p.id}`}>Update</Link>
-                </td>
-                <td>
-                  <btn type="button" onclick={() => onDeleteProduct(p.id)}>
-                    Delete
-                  </btn>
-                </td>
-              </tr>
-            ))}
-          </tr>
+          {products.map((p) => (
+            <tr key={p._id}>
+              <td>{p.name}</td>
+              <td>{p.price}</td>
+              <td>{p.stock}</td>
+              <td>{p.activity.name}</td>
+              <td>
+                <Link to={`/productForm/${p._id}`}>Update</Link>
+              </td>
+              <td>
+                <button type="button" onClick={() => onDeleteProduct(p._id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </React.Fragment>

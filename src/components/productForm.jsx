@@ -1,39 +1,54 @@
 import React from "react";
-import { getProduct } from "../getProducts";
 import DropDownList from "./dropDownList";
 import Input from "./Input";
 
-const ProductForm = ({ categories, activities, match }) => {
-  const product = getProduct(match.params.id);
-  if (product) console.log("edytowany produkt: ", product.id);
-
+const ProductForm = ({
+  product,
+  activities,
+  onCreateProduct,
+  onUpdateProduct,
+}) => {
   const propsFor = {
     name: {
       name: "name",
       type: "text",
+      defaultValue: product?.name,
       validation: { required: true, maxLength: 200 },
     },
     price: {
       name: "price",
       type: "number",
+      defaultValue: product?.price,
       validation: { required: true, step: 0.01, min: 0.01 },
     },
     stock: {
       name: "stock",
       type: "number",
+      defaultValue: product?.stock,
       validation: { required: true, min: 0 },
     },
     activity: {
       name: "activity",
       items: activities,
-      valueProp: "id",
+      valueProp: "_id",
       textProp: "name",
+      defaultValue: product?.activity._id,
       validation: { required: true },
     },
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    console.log("formdata: ", formData);
+    const obj = Object.fromEntries(formData);
+    if (product) {
+      onUpdateProduct(obj, product._id);
+    } else onCreateProduct(obj);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Input {...propsFor.name} />
       <Input {...propsFor.price} />
       <Input {...propsFor.stock} />
@@ -43,74 +58,12 @@ const ProductForm = ({ categories, activities, match }) => {
           maxLength="1000"
           rows="5"
           name="description"
-          defaultValue="description..."
+          defaultValue={product?.description}
         ></textarea>
       </div>
-      <button type="submit">Add to store</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
 export default ProductForm;
-
-{
-  /* {<div>
-        <label for="productName">Name</label>
-        <input
-          type="text"
-          id="productName"
-          name="productName"
-          required
-          maxLength="200"
-        />
-      </div>}
-      <div>
-        <label for="price">Price</label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          step="0.01"
-          min="0.01"
-          required
-        />
-      </div>
-      <div>
-        <label for="stock">Stock</label>
-        <input
-          type="number"
-          id="stock"
-          name="stock"
-          min="0"
-          value="0"
-          required
-        />
-      </div>
-     
-      <div>
-        <label htmlFor="activity">Activity</label>
-        <select required id="activity" name="activity">
-          <option key="0" value="">
-            please select activity
-          </option>
-          {activities.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="category">Activity</label>
-        <select required id="category" name="category">
-          <option key="0" value="">
-            please select category
-          </option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div> */
-}
