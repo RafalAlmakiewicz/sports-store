@@ -7,16 +7,18 @@ import Cart from "./components/cart";
 import NotFound from "./components/notFound";
 import Login from "./components/login";
 import ProductForm from "./components/productForm";
-import getCategories from "./getCategories";
-import getActivities from "./getActivities";
 import AdminPanel from "./components/adminPanel";
 import { useEffect, useState } from "react";
 import ApiCallMaker from "./ApiCallMaker";
+import UserForm from "./components/userForm";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
+import Logout from "./components/logOut";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [user, setUser] = useState(null);
 
   const endpoint = "http://localhost:3000/SportsStore/api";
 
@@ -39,11 +41,17 @@ function App() {
     }
     await fetchData();
 
+    try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["x-auth-token"] = token;
+      const user = jwtDecode(token);
+      setUser(user);
+    } catch (ex) {}
   }, []);
 
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
 
       <Switch>
         <Route
@@ -57,7 +65,7 @@ function App() {
                 }
                 onCreateProduct={productsApi.create}
                 onUpdateProduct={productsApi.update}
-              {...props}
+                {...props}
               />
             );
           }}
@@ -72,12 +80,38 @@ function App() {
             />
           )}
         />
+        <Route
+          path="/product/:id"
+          render={(props) => (
+            <ProductDetails
+              product={
+                products.filter((p) => p._id === props.match.params.id)[0]
+              }
               {...props}
             />
           )}
         />
-        <Route path="/product/:id" component={ProductDetails} />
-        <Route path="/products" component={ProductsGrid} />
+        <Route
+          path="/products"
+          render={(props) => <ProductsGrid products={products} {...props} />}
+        />
+        <Route
+          path="/login"
+          render={(props) => (
+            <UserForm action="Login" endpoint={`${endpoint}/auth`} {...props} />
+          )}
+        />
+        <Route
+          path="/register"
+          render={(props) => (
+            <UserForm
+              action="Register"
+              endpoint={`${endpoint}/users`}
+              {...props}
+            />
+          )}
+        />
+        <Route path="/logout" component={Logout} />
         <Route path="/cart" component={Cart} />
         <Route path="/notFound" component={NotFound} />
         <Route path="/login" component={Login} />

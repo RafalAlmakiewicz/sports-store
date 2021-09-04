@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles.css";
 import { NavLink, Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   return (
     <div className="navbar">
       <ul>
@@ -12,9 +12,25 @@ const NavBar = () => {
         <li>
           <NavLink to="/">Products</NavLink>
         </li>
-        <li>
-          <NavLink to="/login">Login</NavLink>
-        </li>
+        {!user && (
+          <React.Fragment>
+            <li>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">Register</NavLink>
+            </li>
+          </React.Fragment>
+        )}
+        {user && (
+          <React.Fragment>
+            <li>{user.login}</li>
+            <li>
+              <NavLink to="/logout">Log out</NavLink>
+            </li>
+          </React.Fragment>
+        )}
+
         <li>
           <NavLink to="/admin">Admin</NavLink>
         </li>
@@ -29,4 +45,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-<h1 style={{ backgroubd: "tiel" }}>Navbar</h1>;
