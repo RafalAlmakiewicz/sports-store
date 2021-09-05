@@ -59,6 +59,7 @@ const ProductForm = ({
           rows="5"
           name="description"
           defaultValue={product?.description}
+          required
         ></textarea>
       </div>
       <button type="submit">Submit</button>

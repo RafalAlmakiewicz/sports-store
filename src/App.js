@@ -1,11 +1,10 @@
 import "./App.css";
 import NavBar from "./components/navBar";
 import ProductsGrid from "./components/productsGrid";
-import { Route, Switch, Redirect, useParams } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import ProductDetails from "./components/productDetails";
 import Cart from "./components/cart";
 import NotFound from "./components/notFound";
-import Login from "./components/login";
 import ProductForm from "./components/productForm";
 import AdminPanel from "./components/adminPanel";
 import { useEffect, useState } from "react";
@@ -34,12 +33,14 @@ function App() {
     setActivities
   );
 
-  useEffect(async () => {
+  useEffect(() => {
     async function fetchData() {
       await activitiesApi.get();
       await productsApi.get();
     }
-    await fetchData();
+    fetchData();
+
+    localStorage.setItem("cart", "[]");
 
     try {
       const token = localStorage.getItem("token");
@@ -60,9 +61,7 @@ function App() {
             return (
               <ProductForm
                 activities={activities}
-                product={
-                  products.filter((p) => p._id === props.match.params.id)[0]
-                }
+                product={products.find((p) => p._id === props.match.params.id)}
                 onCreateProduct={productsApi.create}
                 onUpdateProduct={productsApi.update}
                 {...props}
@@ -84,9 +83,7 @@ function App() {
           path="/product/:id"
           render={(props) => (
             <ProductDetails
-              product={
-                products.filter((p) => p._id === props.match.params.id)[0]
-              }
+              product={products.find((p) => p._id === props.match.params.id)}
               {...props}
             />
           )}
@@ -114,7 +111,6 @@ function App() {
         <Route path="/logout" component={Logout} />
         <Route path="/cart" component={Cart} />
         <Route path="/notFound" component={NotFound} />
-        <Route path="/login" component={Login} />
         <Redirect from="/" exact to="/products" />
         <Redirect to="/notFound" />
       </Switch>
