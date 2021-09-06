@@ -1,12 +1,20 @@
 import React from "react";
 import ProductForm from "./productForm";
 import { NavLink, Link } from "react-router-dom";
+import resetDatabase from "../resetDatabase";
 
 const AdminPanel = ({ products, onDeleteProduct }) => {
   console.log(products);
   return (
     <React.Fragment>
       <nav>
+        <button
+          onClick={() => {
+            resetDatabase();
+          }}
+        >
+          Set database to default data
+        </button>
         <Link to="/productForm">New Item</Link>
       </nav>
       <table>
