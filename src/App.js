@@ -1,6 +1,6 @@
 import "./App.css";
 import NavBar from "./components/navBar";
-import ProductsGrid from "./components/productsGrid";
+import Products from "./components/products";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ProductDetails from "./components/productDetails";
 import Cart from "./components/cart";
@@ -90,7 +90,7 @@ function App() {
         />
         <Route
           path="/products"
-          render={(props) => <ProductsGrid products={products} {...props} />}
+          render={(props) => <Products products={products} {...props} />}
         />
         <Route
           path="/login"
