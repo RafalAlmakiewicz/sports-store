@@ -91,7 +91,11 @@ function App() {
         <Route
           path="/products"
           render={(props) => (
-            <Products products={products} activities={activities} {...props} />
+            <Products
+              allProducts={products}
+              activities={activities}
+              {...props}
+            />
           )}
         />
         <Route
