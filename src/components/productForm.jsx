@@ -1,6 +1,7 @@
 import React from "react";
 import DropDownList from "./dropDownList";
 import Input from "./Input";
+import withLabel from "./withLabel";
 
 const ProductForm = ({
   product,
@@ -32,7 +33,7 @@ const ProductForm = ({
       items: activities,
       valueProp: "_id",
       textProp: "name",
-      defaultValue: product?.activity._id,
+      value: product?.activity._id,
       validation: { required: true },
     },
   };
@@ -47,12 +48,14 @@ const ProductForm = ({
     } else onCreateProduct(obj);
   };
 
+  const DropDownWithLabel = withLabel(DropDownList, "name");
+
   return (
     <form onSubmit={handleSubmit}>
       <Input {...propsFor.name} />
       <Input {...propsFor.price} />
       <Input {...propsFor.stock} />
-      <DropDownList {...propsFor.activity} />
+      <DropDownWithLabel {...propsFor.activity} />
       <div>
         <textarea
           maxLength="1000"

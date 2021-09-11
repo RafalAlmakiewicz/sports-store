@@ -1,5 +1,4 @@
 import React from "react";
-import { firstLetterToUpper } from "../utils";
 
 const DropDownList = ({
   name,
@@ -7,12 +6,18 @@ const DropDownList = ({
   valueProp,
   textProp,
   validation,
-  defaultValue,
+  value,
+  onSelect,
 }) => {
   return (
-    <div>
-      <label htmlFor={name}>{firstLetterToUpper(name)}</label>
-      <select {...validation} id={name} name={name} defaultValue={defaultValue}>
+    <React.Fragment>
+      <select
+        {...validation}
+        id={name}
+        name={name}
+        defaultValue={value}
+        onChange={onSelect && ((e) => onSelect(e.currentTarget.value))}
+      >
         <option key="0" value=""></option>
         {items.map((i) => (
           <option key={i[valueProp]} value={i[valueProp]}>
@@ -20,7 +25,7 @@ const DropDownList = ({
           </option>
         ))}
       </select>
-    </div>
+    </React.Fragment>
   );
 };
 
