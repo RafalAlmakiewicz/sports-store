@@ -1,22 +1,17 @@
 import React from "react";
+import DropDownList from "./dropDownList";
 
 const ActivityFilter = ({ activities, value, onSelectActivity }) => {
   return (
-    <select
-      defaultValue={value}
-      onChange={(e) => {
-        onSelectActivity(e.currentTarget.value);
-      }}
-    >
-      <option key="0" value="">
-        --activity--
-      </option>
-      {activities.map((a) => (
-        <option key={a._id} value={a._id}>
-          {a.name}
-        </option>
-      ))}
-    </select>
+    <DropDownList
+      name="activityFilter"
+      items={activities}
+      valueProp="_id"
+      textProp="name"
+      value={value}
+      onSelect={onSelectActivity}
+      textForFirstOption="All activities"
+    />
   );
 };
 

@@ -9,6 +9,7 @@ const DropDownList = ({
   defaultValue,
   value,
   onSelect,
+  textForFirstOption,
 }) => {
   return (
     <React.Fragment>
@@ -20,7 +21,9 @@ const DropDownList = ({
         value={value}
         onChange={onSelect && ((e) => onSelect(e.currentTarget.value))}
       >
-        <option key="0" value=""></option>
+        <option key="0" value="">
+          {textForFirstOption}
+        </option>
         {items.map((i) => (
           <option key={i[valueProp]} value={i[valueProp]}>
             {i[textProp]}
