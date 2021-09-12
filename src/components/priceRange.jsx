@@ -1,4 +1,5 @@
 import React from "react";
+import Input from "./Input";
 
 const PriceRange = ({
   minPrice,
@@ -8,21 +9,17 @@ const PriceRange = ({
 }) => {
   return (
     <div>
-      <input
+      <Input
         type="number"
-        placeholder="Min"
         value={minPrice}
-        onChange={(e) => {
-          onSelectMinPrice(e.currentTarget.value);
-        }}
+        onChange={onSelectMinPrice}
+        placeholder="Min"
       />
-      <input
-        type="number"
-        placeholder="Max"
+      <Input
+        type="text"
         value={maxPrice}
-        onChange={(e) => {
-          onSelectMaxPrice(e.currentTarget.value);
-        }}
+        onChange={onSelectMaxPrice}
+        placeholder="Max"
       />
     </div>
   );

@@ -1,6 +1,14 @@
 import React from "react";
 
-const Input = ({ type, name, validation, defaultValue, value, onChange }) => {
+const Input = ({
+  type,
+  name,
+  validation,
+  defaultValue,
+  value,
+  onChange,
+  placeholder,
+}) => {
   return (
     <React.Fragment>
       <input
@@ -11,6 +19,7 @@ const Input = ({ type, name, validation, defaultValue, value, onChange }) => {
         defaultValue={defaultValue}
         value={value}
         onChange={onChange && ((e) => onChange(e.currentTarget.value))}
+        placeholder={placeholder}
       />
     </React.Fragment>
   );

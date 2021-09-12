@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import Input from "./Input";
 
 const SearchBox = ({ value, onSearch }) => {
   return (
-    <input
+    <Input
       type="text"
       name="search"
-      placeholder="Search..."
       value={value}
-      onChange={(e) => {
-        onSearch(e.currentTarget.value);
-      }}
+      onChange={onSearch}
+      placeholder="Search..."
     />
   );
 };
