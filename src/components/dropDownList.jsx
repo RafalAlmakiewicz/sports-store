@@ -6,16 +6,18 @@ const DropDownList = ({
   valueProp,
   textProp,
   validation,
+  defaultValue,
   value,
   onSelect,
 }) => {
   return (
     <React.Fragment>
       <select
-        {...validation}
         id={name}
         name={name}
-        defaultValue={value}
+        {...validation}
+        defaultValue={defaultValue}
+        value={value}
         onChange={onSelect && ((e) => onSelect(e.currentTarget.value))}
       >
         <option key="0" value=""></option>

@@ -33,7 +33,7 @@ const ProductForm = ({
       items: activities,
       valueProp: "_id",
       textProp: "name",
-      value: product?.activity._id,
+      defaultValue: product?.activity._id,
       validation: { required: true },
     },
   };
@@ -49,12 +49,13 @@ const ProductForm = ({
   };
 
   const DropDownWithLabel = withLabel(DropDownList, "name");
+  const InputWithLabel = withLabel(Input, "name");
 
   return (
     <form onSubmit={handleSubmit}>
-      <Input {...propsFor.name} />
-      <Input {...propsFor.price} />
-      <Input {...propsFor.stock} />
+      <InputWithLabel {...propsFor.name} />
+      <InputWithLabel {...propsFor.price} />
+      <InputWithLabel {...propsFor.stock} />
       <DropDownWithLabel {...propsFor.activity} />
       <div>
         <textarea

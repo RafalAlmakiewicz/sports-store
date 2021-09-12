@@ -1,18 +1,18 @@
 import React from "react";
-import { firstLetterToUpper } from "../utils";
 
-const Input = ({ name, type, defaultValue, validation }) => {
+const Input = ({ type, name, validation, defaultValue, value, onChange }) => {
   return (
-    <div>
-      <label htmlFor={name}>{firstLetterToUpper(name)}</label>
+    <React.Fragment>
       <input
         type={type}
         id={name}
         name={name}
-        defaultValue={defaultValue}
         {...validation}
+        defaultValue={defaultValue}
+        value={value}
+        onChange={onChange && ((e) => onChange(e.currentTarget.value))}
       />
-    </div>
+    </React.Fragment>
   );
 };
 
