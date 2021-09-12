@@ -3,16 +3,36 @@ import React from "react";
 const ChangePage = ({ pageCount, currentPage, onPageChange }) => {
   return (
     <div>
-      {[...Array(pageCount)].map((e, i) => (
+      {pageCount > 1 && currentPage !== 1 && (
         <button
-          autofocus={i + 1 === currentPage}
           onClick={() => {
-            onPageChange(i + 1);
+            onPageChange(currentPage - 1);
           }}
         >
-          {i + 1}
+          &lt;
         </button>
-      ))}
+      )}
+      {pageCount > 1 &&
+        [...Array(pageCount)].map((e, i) => (
+          <button
+            key={i}
+            className={i + 1 === currentPage ? "selected" : undefined}
+            onClick={() => {
+              onPageChange(i + 1);
+            }}
+          >
+            {i + 1}
+          </button>
+        ))}
+      {pageCount > 1 && currentPage !== pageCount && (
+        <button
+          onClick={() => {
+            onPageChange(currentPage + 1);
+          }}
+        >
+          &gt;
+        </button>
+      )}
     </div>
   );
 };
