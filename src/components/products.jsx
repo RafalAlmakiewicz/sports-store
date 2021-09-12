@@ -4,7 +4,8 @@ import PriceRange from "./priceRange";
 import ProductsGrid from "./productsGrid";
 import SearchBox from "./searchBox";
 import SortBy from "./sortBy";
-import { sortProducts } from "../utils";
+import { sortProducts, paginate, getPageCount } from "../utils";
+import ChangePage from "./changePage";
 
 const Products = ({ allProducts, activities }) => {
   const [searchString, setSearchString] = useState("");
@@ -13,6 +14,10 @@ const Products = ({ allProducts, activities }) => {
   const [maxPrice, setMaxPrice] = useState(0);
   const [sortBy, setSortBy] = useState("name");
   const [order, setOrder] = useState("ascending");
+  const [page, setPage] = useState(1);
+
+  const pageSize = 4;
+  let filteredCount;
 
   const handleSearch = (value) => {
     setSearchString(value);
@@ -38,6 +43,10 @@ const Products = ({ allProducts, activities }) => {
     setOrder(value);
   };
 
+  const handlePageChange = (value) => {
+    setPage(value);
+  };
+
   const getProductsToDisplay = () => {
     let products = allProducts.filter((p) =>
       p.name.toLowerCase().includes(searchString.toLowerCase())
@@ -47,6 +56,8 @@ const Products = ({ allProducts, activities }) => {
     if (minPrice) products = products.filter((p) => p.price >= minPrice);
     if (maxPrice) products = products.filter((p) => p.price <= maxPrice);
     sortProducts(products, order, sortBy);
+    filteredCount = products.length;
+    products = paginate(products, pageSize, page);
     return products;
   };
 
@@ -71,6 +82,11 @@ const Products = ({ allProducts, activities }) => {
         onSort={handleSort}
       />
       <ProductsGrid products={getProductsToDisplay()} />
+      <ChangePage
+        pageCount={getPageCount(filteredCount, pageSize)}
+        currentPage={page}
+        onPageChange={handlePageChange}
+      />
     </React.Fragment>
   );
 };

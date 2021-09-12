@@ -17,3 +17,12 @@ export const sortProducts = (products, orderName, sortBy) => {
       break;
   }
 };
+
+export const paginate = (items, pageSize, currentPage) => {
+  const index = pageSize * (currentPage - 1);
+  const page = items.slice(index, index + pageSize);
+  return page;
+};
+
+export const getPageCount = (itemsCount, pageSize) =>
+  Math.ceil(itemsCount / pageSize);
