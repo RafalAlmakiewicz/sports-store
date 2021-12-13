@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap");
+
+$c-neutral-1: #ddd;
+$c-neutral-2: #ccc;
+$c-neutral-3: #bbb;
+$c-neutral-4: #aaa;
+$c-neutral-5: #999;
+$c-neutral-6: #444;
+$c-transparent: rgba(0, 0, 0, 0.2);
+
+$small: 580px;
+$medium: 750px;
+
+$border: 1px solid $c-neutral-3;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+button {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: $c-neutral-6;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 5.4rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+a {
+  all: unset;
+}
+
+ul {
+  list-style: none;
+}
+
+input,
+select {
+  border: $border;
+  color: $c-neutral-6;
+  display: block;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+select {
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  padding-left: 1rem;
+
+  &:focus {
+    color: black;
+    outline: 1px solid black;
+  }
+
+  &[type="radio"] {
+    appearance: none;
+    height: 1.2em;
+    padding: 0;
+    position: relative;
+    width: 1.2em;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:checked {
+      background: $c-neutral-6;
+
+      &::before {
+        color: white;
+        content: "X";
+        height: 100%;
+        inset: 0.1rem;
+        position: absolute;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.btn {
+  border: none;
+  font-family: "Roboto Mono", Courier, monospace;
+  font-weight: 500;
+  height: 3rem;
+  letter-spacing: 1px;
+  line-height: 3rem;
+  min-width: 3rem;
+  text-align: center;
+  text-transform: uppercase;
+
+  &-primary {
+    color: white;
+    background: linear-gradient(to right, #222, #444);
+
+    &:hover {
+      background: linear-gradient(to right, red, violet);
+    }
+  }
+
+  &-neutral {
+    background: $c-neutral-1;
+    border: $border;
+    color: black;
+
+    &:hover {
+      background: $c-neutral-2;
+    }
+  }
+}
+
+.counter {
+  display: flex;
+
+  p {
+    border-bottom: $border;
+    border-top: $border;
+    line-height: 3rem;
+    text-align: center;
+    width: 4rem;
+  }
+}
+
+.drop-menu {
+  background: $c-neutral-2;
+  border: $border;
+  display: none;
+  left: 0;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+
+  &-item {
+    display: block;
+    text-align: center;
+
+    &:hover {
+      background: linear-gradient(to right, $c-neutral-4, 20%, $c-neutral-3);
+    }
+  }
+}

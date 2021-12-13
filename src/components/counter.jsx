@@ -1,16 +1,24 @@
 import React from "react";
 
-const Counter = ({ count, set, min, max, id }) => {
+const Counter = ({ count, set, min, max, id, className }) => {
   return (
-    <React.Fragment>
-      <button disabled={count == min} onClick={() => set(count - 1, id)}>
+    <div className={`counter ${className}`}>
+      <button
+        className="btn btn-neutral"
+        disabled={count == min}
+        onClick={() => set(count - 1, id)}
+      >
         -
       </button>
-      {count}
-      <button disabled={count == max} onClick={() => set(count + 1, id)}>
+      <p>{count}</p>
+      <button
+        className="btn btn-neutral"
+        disabled={count == max}
+        onClick={() => set(count + 1, id)}
+      >
         +
       </button>
-    </React.Fragment>
+    </div>
   );
 };
 

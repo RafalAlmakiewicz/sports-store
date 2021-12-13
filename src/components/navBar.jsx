@@ -1,18 +1,27 @@
 import React, { useState } from "react";
-import "../styles.css";
 import { NavLink, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NavBar = ({ user }) => {
   return (
-    <div className="navbar">
+    <nav>
       <ul>
-        <li>
-          <Link to="/">[Sports Store]</Link>
-        </li>
-        <li>
-          <NavLink to="/">Products</NavLink>
-        </li>
-        {!user && (
+        {user ? (
+          <React.Fragment>
+            <li className="user">
+              <FontAwesomeIcon icon="user-circle" />
+              <p>{user.login}</p>
+              <div className="drop-menu">
+                <NavLink className="drop-menu-item" to="/admin">
+                  admin
+                </NavLink>
+                <NavLink className="drop-menu-item" to="/logout">
+                  log out
+                </NavLink>
+              </div>
+            </li>
+          </React.Fragment>
+        ) : (
           <React.Fragment>
             <li>
               <NavLink to="/login">Login</NavLink>
@@ -22,25 +31,13 @@ const NavBar = ({ user }) => {
             </li>
           </React.Fragment>
         )}
-        {user && (
-          <React.Fragment>
-            <li>{user.login}</li>
-            <li>
-              <NavLink to="/logout">Log out</NavLink>
-            </li>
-          </React.Fragment>
-        )}
-
-        <li>
-          <NavLink to="/admin">Admin</NavLink>
-        </li>
         <li>
           <Link to="/cart">
             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           </Link>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 

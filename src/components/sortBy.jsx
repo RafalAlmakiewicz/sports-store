@@ -7,13 +7,7 @@ const SortBy = ({ order, sortBy, onChangeOrder, onSort }) => {
   const DropDownWithLabel = withLabel(DropDownList, "name");
 
   return (
-    <div>
-      <RadioGroup
-        buttons={[{ id: "ascending" }, { id: "descending" }]}
-        name="order"
-        selectedValue={order}
-        onChange={onChangeOrder}
-      />
+    <React.Fragment>
       <DropDownWithLabel
         name="sort by"
         items={[{ name: "price" }, { name: "name" }]}
@@ -22,7 +16,14 @@ const SortBy = ({ order, sortBy, onChangeOrder, onSort }) => {
         value={sortBy}
         onSelect={onSort}
       />
-    </div>
+      <RadioGroup
+        className="order"
+        buttons={[{ id: "ascending" }, { id: "descending" }]}
+        name="order"
+        selectedValue={order}
+        onChange={onChangeOrder}
+      />
+    </React.Fragment>
   );
 };
 

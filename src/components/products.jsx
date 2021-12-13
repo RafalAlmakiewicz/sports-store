@@ -16,7 +16,7 @@ const Products = ({ allProducts, activities }) => {
   const [order, setOrder] = useState("ascending");
   const [page, setPage] = useState(1);
 
-  const pageSize = 4;
+  const pageSize = 12;
   let filteredCount;
 
   const handleSearch = (value) => {
@@ -62,32 +62,35 @@ const Products = ({ allProducts, activities }) => {
   };
 
   return (
-    <React.Fragment>
-      <SearchBox value={searchString} onSearch={handleSearch} />
-      <ActivityFilter
-        value={activity}
-        onSelectActivity={handleSelectActivity}
-        activities={activities}
-      />
-      <PriceRange
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        onSelectMinPrice={handleSelectMinPrice}
-        onSelectMaxPrice={handleSelectMaxPrice}
-      />
-      <SortBy
-        order={order}
-        sortBy={sortBy}
-        onChangeOrder={handleChangeOrder}
-        onSort={handleSort}
-      />
+    <div className="home">
+      <div className="sidebar">
+        <SearchBox value={searchString} onSearch={handleSearch} />
+        <ActivityFilter
+          value={activity}
+          onSelectActivity={handleSelectActivity}
+          activities={activities}
+        />
+        <PriceRange
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          onSelectMinPrice={handleSelectMinPrice}
+          onSelectMaxPrice={handleSelectMaxPrice}
+        />
+        <SortBy
+          order={order}
+          sortBy={sortBy}
+          onChangeOrder={handleChangeOrder}
+          onSort={handleSort}
+        />
+      </div>
+
       <ProductsGrid products={getProductsToDisplay()} />
       <ChangePage
         pageCount={getPageCount(filteredCount, pageSize)}
         currentPage={page}
         onPageChange={handlePageChange}
       />
-    </React.Fragment>
+    </div>
   );
 };
 

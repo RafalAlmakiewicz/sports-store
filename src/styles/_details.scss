@@ -1,0 +1,67 @@
+.details {
+  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 30rem 25rem;
+  grid-template-rows: auto 3rem 3rem auto 3rem 3rem;
+  margin: auto;
+  margin: auto;
+  place-content: center;
+  row-gap: 1rem;
+  grid-template-areas:
+    " back ."
+    " image name"
+    " image price"
+    " image description"
+    "image counter"
+    " image cart";
+
+  &-back {
+    grid-area: back;
+    margin-bottom: 2.5rem;
+  }
+
+  &-image {
+    grid-area: image;
+    height: 45rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  &-price {
+    grid-area: price;
+    border-bottom: $border;
+  }
+
+  &-name {
+    grid-area: name;
+  }
+
+  &-counter {
+    grid-area: counter;
+  }
+
+  &-cart {
+    grid-area: cart;
+  }
+
+  &-description {
+    grid-area: description;
+  }
+
+  @media (max-width: $small) {
+    grid-template-columns: 30rem;
+    grid-template-rows: auto auto 3rem 3rem auto 3rem 3rem;
+    grid-template-areas:
+      "back "
+      "image"
+      "name"
+      " price"
+      " description"
+      "counter"
+      " cart";
+  }
+}
