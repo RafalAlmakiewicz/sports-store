@@ -1,5 +1,6 @@
 import "./App.css";
-import NavBar from "./components/navBar";
+import Header from "./components/header";
+import Footer from "./components/footer";
 import Products from "./components/products";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ProductDetails from "./components/productDetails";
@@ -7,12 +8,15 @@ import Cart from "./components/cart";
 import NotFound from "./components/notFound";
 import ProductForm from "./components/productForm";
 import AdminPanel from "./components/adminPanel";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ApiCallMaker from "./ApiCallMaker";
 import UserForm from "./components/userForm";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import Logout from "./components/logOut";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faUserCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+library.add(faUserCircle, faSearch);
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -51,76 +55,84 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <NavBar user={user} />
-
-      <Switch>
-        <Route
-          path="/productForm/:id?"
-          render={(props) => {
-            return (
-              <ProductForm
-                activities={activities}
-                product={products.find((p) => p._id === props.match.params.id)}
-                onCreateProduct={productsApi.create}
-                onUpdateProduct={productsApi.update}
+    <React.Fragment>
+      <Header user={user} />
+      <main>
+        <Switch>
+          <Route
+            path="/productForm/:id?"
+            render={(props) => {
+              return (
+                <ProductForm
+                  activities={activities}
+                  product={products.find(
+                    (p) => p._id === props.match.params.id
+                  )}
+                  onCreateProduct={productsApi.create}
+                  onUpdateProduct={productsApi.update}
+                  {...props}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/admin"
+            render={(props) => (
+              <AdminPanel
+                products={products}
+                onDeleteProduct={productsApi.delete}
                 {...props}
               />
-            );
-          }}
-        />
-        <Route
-          path="/admin"
-          render={(props) => (
-            <AdminPanel
-              products={products}
-              onDeleteProduct={productsApi.delete}
-              {...props}
-            />
-          )}
-        />
-        <Route
-          path="/product/:id"
-          render={(props) => (
-            <ProductDetails
-              product={products.find((p) => p._id === props.match.params.id)}
-              {...props}
-            />
-          )}
-        />
-        <Route
-          path="/products"
-          render={(props) => (
-            <Products
-              allProducts={products}
-              activities={activities}
-              {...props}
-            />
-          )}
-        />
-        <Route
-          path="/login"
-          render={(props) => (
-            <UserForm action="Login" endpoint={`${endpoint}/auth`} {...props} />
-          )}
-        />
-        <Route
-          path="/register"
-          render={(props) => (
-            <UserForm
-              action="Register"
-              endpoint={`${endpoint}/users`}
-              {...props}
-            />
-          )}
-        />
-        <Route path="/logout" component={Logout} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/notFound" component={NotFound} />
-        <Redirect from="/" exact to="/products" />
-        <Redirect to="/notFound" />
-      </Switch>
-    </div>
+            )}
+          />
+          <Route
+            path="/product/:id"
+            render={(props) => (
+              <ProductDetails
+                product={products.find((p) => p._id === props.match.params.id)}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/products"
+            render={(props) => (
+              <Products
+                allProducts={products}
+                activities={activities}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/login"
+            render={(props) => (
+              <UserForm
+                action="Login"
+                endpoint={`${endpoint}/auth`}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/register"
+            render={(props) => (
+              <UserForm
+                action="Register"
+                endpoint={`${endpoint}/users`}
+                {...props}
+              />
+            )}
+          />
+          <Route path="/logout" component={Logout} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/notFound" component={NotFound} />
+          <Redirect from="/" exact to="/products" />
+          <Redirect to="/notFound" />
+        </Switch>
+      </main>
+      <Footer />
+    </React.Fragment>
   );
 }
 
