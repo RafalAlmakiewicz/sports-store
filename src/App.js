@@ -14,8 +14,13 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import Logout from "./components/logOut";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUserCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
-library.add(faUserCircle, faSearch);
+import {
+  faUserCircle,
+  faSearch,
+  faTrash,
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faUserCircle, faSearch, faTrash, faEdit);
 
 function App() {
   const [products, setProducts] = useState([]);
