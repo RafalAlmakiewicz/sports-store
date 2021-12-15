@@ -22,7 +22,10 @@ const ProductDetails = ({ product }) => {
         />
       )}
       <div className="details-image">
-        <img src={images["barbell"]} alt={product.name} />
+        <img
+          src={images[product.name.replaceAll(" ", "")]}
+          alt={product.name}
+        />
       </div>
       <h2 className="details-name">{product.name}</h2>
       <p className="details-price">{product.price}$</p>

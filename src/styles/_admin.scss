@@ -43,3 +43,13 @@
 .dark {
   background: #222;
 }
+
+/*product form*/
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 1rem;
+  width: 18rem;
+}
