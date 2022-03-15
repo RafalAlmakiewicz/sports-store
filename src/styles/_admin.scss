@@ -53,3 +53,21 @@ form {
   gap: 1rem;
   width: 18rem;
 }
+
+///cart
+
+.cart-buy {
+  /*width: 15rem;
+  margin: auto;*/
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  button {
+    padding: 1rem 2rem;
+  }
+}
+
+@mixin dark-theme {
+}
