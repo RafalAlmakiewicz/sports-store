@@ -1,5 +1,6 @@
+import { AxiosError } from "axios";
 import images from "./images/images";
-import { Activity, Product } from "./types";
+import { Product } from "./types";
 
 export const firstLetterToUpper = (s: string) =>
   s.charAt(0).toUpperCase() + s.substring(1);
@@ -17,8 +18,8 @@ export const sortProducts = (
       break;
     case "name":
       products.sort((a, b) => {
-        if (a.name > b.name) return order;
-        if (a.name < b.name) return -order;
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return order;
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return -order;
         return 0;
       });
       break;
@@ -60,11 +61,47 @@ const imageStorage =
 const imageFormat = ".jpg";
 
 /*export const getImagePath = (productName) => {
-  return imageStorage + productName.replaceAll(" ", "") + imageFormat;
+  return imageStorage + productName.replace(/ /g, "") + imageFormat;
 };*/
 
 export const getImagePath = (productName: string) => {
-  return (images as { [prop: string]: string })[
-    productName.replaceAll(" ", "")
-  ];
+  return (images as { [prop: string]: string })[productName.replace(/ /g, "")];
+};
+
+export const matchesPriceFormat = (value: string) => {
+  return !!value.match(/^\d*\.\d{2}$/);
+};
+
+export const matchesInteger = (value: string) => {
+  return !!value.match(/^\d*$/);
+};
+
+export const formatPrice = (value: string) => {
+  value = padEndZerosToDecimalPart(value, 2);
+  return (+value).toFixed(2);
+};
+
+export const padEndZerosToDecimalPart = (value: string, max: number) => {
+  if (value.split(".").length === 1) value += ".";
+  return value.split(".")[0] + "." + value.split(".")[1].padEnd(max, "0");
+};
+
+export const removeLeadingZeros = (value: number) => {
+  return +value.toString().replace(/^0+/, "");
+};
+
+export const formatInteger = (value: string) => {
+  return removeLeadingZeros(Math.round(+value));
+};
+
+export const tryRequest = async (request: Function, args?: unknown) => {
+  try {
+    await request(args);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (!axiosError.response) {
+      return "Error: server did not respond.";
+    } else return axiosError.response.data;
+  }
+  return "";
 };

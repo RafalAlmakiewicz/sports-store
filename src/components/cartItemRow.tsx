@@ -33,7 +33,7 @@ const CartItemRow = ({
       <td>{product.stock}</td>
       <td>{getSubtotal()}</td>
       <td>
-        <button onClick={handleRemove(product._id)}>
+        <button onClick={handleRemove(product._id)} data-testid="cart-delete">
           <FontAwesomeIcon icon="trash" />
         </button>
       </td>

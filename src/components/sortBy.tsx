@@ -26,7 +26,7 @@ const SortBy = ({
         valueProp="name"
         textProp="name"
         value={value}
-        handleChange={handleChangeValue}
+        onChange={handleChangeValue}
       />
       <RadioGroup
         className="order"

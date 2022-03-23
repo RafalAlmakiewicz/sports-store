@@ -3,21 +3,15 @@ import AddToCart from "./addToCart";
 import Counter from "./counter";
 import { Link } from "react-router-dom";
 import { getImagePath } from "../utils";
-import { Product } from "../types";
-import { Redirect, useHistory, useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { useProducts } from "../contexts/productsContext";
 
 const ProductDetails = () => {
-  const { products } = useProducts();
-
-  //const products = useProducts();
-
   const [quantity, setQuantity] = useState(1);
   const [showNotification, setShowNotification] = useState(false);
-
   const { id } = useParams<{ id: string }>();
+  const { products } = useProducts();
   let product = products.find((product) => product._id === id);
-  const history = useHistory();
 
   const handleClickCounter = (count: number) => () => setQuantity(count);
 

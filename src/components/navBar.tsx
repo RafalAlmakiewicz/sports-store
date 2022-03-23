@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useUser } from "../contexts/userContext";
 
 const NavBar = () => {
-  const { user } = useUser();
+  const { user, logOut } = useUser();
   return (
     <nav>
       <ul>
@@ -15,12 +15,12 @@ const NavBar = () => {
             <FontAwesomeIcon icon="user-circle" />
             <p>{user.login}</p>
             <div className="drop-menu">
-              <NavLink className="drop-menu-item" to="/admin">
-                admin
-              </NavLink>
-              <NavLink className="drop-menu-item" to="/logout">
+              <Link className="drop-menu-item" to="/admin">
+                admin panel
+              </Link>
+              <button onClick={logOut} className="drop-menu-item">
                 log out
-              </NavLink>
+              </button>
             </div>
           </li>
         ) : (

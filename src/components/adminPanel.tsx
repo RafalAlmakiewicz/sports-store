@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import resetDatabase from "../resetDatabase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProducts } from "../contexts/productsContext";
+import { useApi } from "../contexts/apiContext";
+import ErrorList from "./ErrorList";
+import { tryRequest } from "../utils";
 
 const AdminPanel = () => {
-  const { products, deleteProduct } = useProducts();
+  const { products, deleteProduct, getAllProducts } = useProducts();
+  const { resetDatabase } = useApi();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -13,21 +17,32 @@ const AdminPanel = () => {
     body.classList.add("dark");
   }, []);
 
+  const SetDbToDefaulData = async () => {
+    let error = await tryRequest(resetDatabase);
+    if (error) setError(error);
+    else {
+      error = await tryRequest(getAllProducts);
+      if (error) setError(error);
+    }
+  };
+
+  const handleDeleteProduct = (id: string) => async () => {
+    const error = await tryRequest(deleteProduct, id);
+    if (error) setError(error);
+  };
+
   return (
     <div className="admin-panel">
+      <h2>Admin Panel</h2>
       <div className="admin-panel-actions">
-        <button
-          className="btn btn-secondary"
-          onClick={() => {
-            resetDatabase();
-          }}
-        >
+        <button className="btn btn-secondary" onClick={SetDbToDefaulData}>
           Set database to default data
         </button>
         <Link className="btn btn-secondary" to="/productForm">
           New Item
         </Link>
       </div>
+      {error && <ErrorList errors={[error]} />}
       <table>
         <thead>
           <tr>
@@ -47,14 +62,15 @@ const AdminPanel = () => {
               <td>{product.stock}</td>
               <td>{product.activity.name}</td>
               <td>
-                <Link to={`/productForm/${product._id}`}>
+                <Link to={`/productForm/${product._id}`} data-testid="update">
                   <FontAwesomeIcon icon="edit" />
                 </Link>
               </td>
               <td>
                 <button
+                  data-testid="delete"
                   type="button"
-                  onClick={() => deleteProduct(product._id)}
+                  onClick={handleDeleteProduct(product._id)}
                 >
                   <FontAwesomeIcon icon="trash" />
                 </button>

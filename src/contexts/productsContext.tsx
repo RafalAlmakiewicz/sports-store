@@ -1,23 +1,15 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { useHistory } from "react-router";
-import ApiCaller from "../ApiCaller";
-import { apiEndpoint } from "../apiEndpoint";
 import { Product } from "../types";
+import { useApi } from "./apiContext";
 
 interface ProductsContext {
   products: Product[];
-  getAllProducts: () => void;
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
-  updateProduct: (product: Product) => void;
-  createProduct: (product: Product) => void;
-  deleteProduct: (id: string) => void;
+  getAllProducts: () => Promise<void>;
+  updateProduct: (product: Product) => Promise<void>;
+  createProduct: (product: Product) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
 }
 
 const productsContext = createContext<ProductsContext>({} as ProductsContext);
@@ -30,38 +22,31 @@ export const ProductsProvider = ({
   children: React.ReactNode;
 }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const productsApi = useRef(new ApiCaller<Product>(`${apiEndpoint}/products`));
+
+  const { productsApi } = useApi();
   const history = useHistory();
 
-  const getAllProducts = () => {
-    productsApi.current.getAll().then((products) => {
-      setProducts(products);
-    });
+  const getAllProducts = async () => {
+    let data = await productsApi.getAll();
+    setProducts(data);
   };
 
-  const createProduct = (product: Product) => {
-    productsApi.current.create(products, product).then((products) => {
-      setProducts(products);
-    });
+  const createProduct = async (product: Product) => {
+    let data = await productsApi.create(products, product);
+    setProducts(data);
     history.push("/admin");
   };
 
-  const updateProduct = (product: Product) => {
-    productsApi.current.update(products, product).then((products) => {
-      setProducts(products);
-    });
+  const updateProduct = async (product: Product) => {
+    let data = await productsApi.update(products, product);
+    setProducts(data);
     history.push("/admin");
   };
 
-  const deleteProduct = (id: string) => {
-    productsApi.current.delete(products, id).then((products) => {
-      setProducts(products);
-    });
+  const deleteProduct = async (id: string) => {
+    let data = await productsApi.delete(products, id);
+    setProducts(data);
   };
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
 
   const value = useMemo(() => {
     return {

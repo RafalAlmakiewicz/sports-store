@@ -8,7 +8,7 @@ import { sortProducts, paginate, getPageCount, filterProducts } from "../utils";
 import ChangePage from "./changePage";
 import { useProducts } from "../contexts/productsContext";
 
-const Products = () => {
+const Products = ({ pageSize = 12 }) => {
   const { products: allProducts } = useProducts();
 
   const [state, setState] = useState({
@@ -21,7 +21,6 @@ const Products = () => {
     page: 1,
   });
 
-  const pageSize = 12;
   let filteredCount = 0;
 
   const handleChange =

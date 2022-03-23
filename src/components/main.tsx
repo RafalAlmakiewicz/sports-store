@@ -6,7 +6,6 @@ import NotFound from "./notFound";
 import ProductForm from "./productForm";
 import AdminPanel from "./adminPanel";
 import UserForm from "./userForm";
-import Logout from "./logOut";
 import ProtectedRoute from "./protectedRoute";
 
 const Main = () => {
@@ -35,7 +34,6 @@ const Main = () => {
         <Route path="/register">
           <UserForm action="register" />
         </Route>
-        <Route path="/logout" component={Logout} />
         <Route path="/cart" component={Cart} />
         <Route path="/notFound" component={NotFound} />
         <Redirect from="/" exact to="/products" />

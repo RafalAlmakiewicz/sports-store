@@ -16,15 +16,15 @@ const PriceRange = ({
   return (
     <div className="price-range">
       <Input
-        label="min"
+        name="min"
         type="number"
         value={minPrice}
         onChange={handleChangeMinPrice}
         placeholder="Min"
       />
       <Input
-        label="max"
-        type="text"
+        name="max"
+        type="number"
         value={maxPrice}
         onChange={handleChangeMaxPrice}
         placeholder="Max"

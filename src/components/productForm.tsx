@@ -1,10 +1,14 @@
 import Input from "./Input";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import Select from "./select";
 import { useActivities } from "../contexts/activitiesContext";
 import { Product } from "../types";
 import { useProducts } from "../contexts/productsContext";
+import { Field, useValidation } from "../hooks/useValidation";
+import ErrorList from "./ErrorList";
+import TextArea from "./textArea";
+import { formatPrice, tryRequest } from "../utils";
 
 const ProductForm = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,61 +16,145 @@ const ProductForm = () => {
   const product = products.find((product) => product._id === id);
   const { activities } = useActivities();
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const [form, setForm] = useState({
+    name: product?.name ? product.name : "",
+    price: product?.price ? product.price.toString() : "0.00",
+    stock: product?.stock ? product.stock : 0,
+    activity: product?.activity ? product.activity._id : "",
+    description: product?.description ? product.description : "",
+  });
+
+  const schema: Field[] = [
+    {
+      name: "name",
+      required: true,
+      maxLength: 200,
+    },
+
+    {
+      name: "price",
+      required: true,
+      min: 0.01,
+    },
+    {
+      name: "stock",
+      min: 0,
+      integer: true,
+    },
+    {
+      name: "activity",
+      required: true,
+    },
+    {
+      name: "description",
+      required: true,
+      maxLength: 1000,
+    },
+  ];
+
+  const { errors, validateAllTouched, shouldDisableSubmit, setErrors } =
+    useValidation(schema, !!product);
+
+  const validate = (touchedFieldName: keyof typeof form) => () => {
+    validateAllTouched(
+      touchedFieldName,
+      Object.entries(form).map(([name, value]) => {
+        return { name, value: String(value) };
+      })
+    );
+  };
+
+  const validatePrice: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    validate("price")();
+    setForm({
+      ...form,
+      price: formatPrice(event.target.value),
+    });
+  };
+
+  const handleChange =
+    (fieldName: keyof typeof form) =>
+    (
+      event: React.ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >
+    ) => {
+      let { value } = event.target;
+      setForm({
+        ...form,
+        [fieldName]: value,
+      });
+    };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
     event.preventDefault();
-    const form = Object.fromEntries(new FormData(event.currentTarget));
     const newProduct = {
       ...form,
       _id: product?._id,
+      price: +form.price,
       activity: activities.find((activity) => activity._id === form.activity),
     } as Product;
-    if (product) {
-      updateProduct(newProduct);
-    } else createProduct(newProduct);
+    const request = product ? updateProduct : createProduct;
+    const error = await tryRequest(request, newProduct);
+    if (error) setErrors([error]);
   };
 
+  const getHeader = () => (product ? "Update Product" : "Create Product");
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        name="name"
-        type="text"
-        defaultValue={product?.name}
-        validation={{ required: true, maxLength: 200 }}
-      />
-      <Input
-        name="price"
-        type="number"
-        defaultValue={product?.price}
-        validation={{ required: true, step: 0.01, min: 0.01 }}
-      />
-      <Input
-        name="stock"
-        type="number"
-        defaultValue={product?.stock}
-        validation={{ required: true, min: 0 }}
-      />
-      <Select
-        name="activity"
-        items={activities}
-        valueProp="_id"
-        textProp="name"
-        defaultValue={product?.activity._id}
-        validation={{ required: true }}
-      />
-      <div>
-        <label>Description</label>
-        <textarea
-          maxLength={1000}
-          rows={5}
+    <>
+      <h2>{getHeader()}</h2>
+      <form onSubmit={handleSubmit}>
+        <ErrorList errors={errors} />
+        <Input
+          name="name"
+          type="text"
+          value={form.name}
+          onChange={handleChange("name")}
+          onBlur={validate("name")}
+        />
+        <Input
+          name="price"
+          type="number"
+          step={0.01}
+          value={form.price}
+          onChange={handleChange("price")}
+          onBlur={validatePrice}
+        />
+        <Input
+          name="stock"
+          type="number"
+          value={form.stock}
+          onChange={handleChange("stock")}
+          onBlur={validate("stock")}
+        />
+        <Select
+          name="activity"
+          items={activities}
+          valueProp="_id"
+          textProp="name"
+          value={form.activity}
+          onChange={handleChange("activity")}
+          onBlur={validate("activity")}
+        />
+        <TextArea
           name="description"
-          defaultValue={product?.description}
-          required
-        ></textarea>
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+          rows={5}
+          value={form.description}
+          onChange={handleChange("description")}
+          onBlur={validate("description")}
+        />
+        <button
+          disabled={shouldDisableSubmit()}
+          type="submit"
+          className="btn btn-primary"
+        >
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 

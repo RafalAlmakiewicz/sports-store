@@ -1,73 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./Input";
-import axios, { AxiosError } from "axios";
 import { useHistory } from "react-router";
-import { apiEndpoint } from "../apiEndpoint";
 import { useUser } from "../contexts/userContext";
+import { useValidation } from "../hooks/useValidation";
+import ErrorList from "./ErrorList";
+import { tryRequest } from "../utils";
 
 interface UserFormProps {
   action: "register" | "login";
 }
 
 const UserForm = ({ action }: UserFormProps) => {
-  const [error, setError] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
-  const { decodeToken } = useUser();
+  const { decodeToken, logIn, register } = useUser();
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const { errors, setErrors, reset, validateAllTouched, shouldDisableSubmit } =
+    useValidation([
+      {
+        name: "login",
+        required: true,
+        minLength: 5,
+        maxLength: 50,
+      },
+
+      {
+        name: "password",
+        required: true,
+        minLength: 5,
+        maxLength: 100,
+      },
+    ]);
+
+  useEffect(() => {
+    reset();
+    setLogin("");
+    setPassword("");
+  }, [action]);
+
+  const validate = (touchedFieldName: string) => () => {
+    validateAllTouched(touchedFieldName, [
+      { name: "login", value: login },
+      { name: "password", value: password },
+    ]);
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
     event.preventDefault();
-    let endpoint =
-      action === "register" ? `${apiEndpoint}/users` : `${apiEndpoint}/auth`;
-    axios
-      .post(endpoint, { login, password })
-      .then((response) => {
-        const { data: token } = response;
-        localStorage.setItem("token", token);
-        decodeToken(token);
-        history.push("/admin");
-      })
-      .catch((error: AxiosError) => {
-        if (error.response && error.response.status === 400) {
-          console.log("error: ", error.response);
-          setError(error.response.data);
-        }
-      });
-  };
-
-  const handleChangeLogin: React.ChangeEventHandler<HTMLInputElement> = ({
-    target,
-  }) => {
-    setLogin(target.value);
-  };
-
-  const handleChangePassword: React.ChangeEventHandler<HTMLInputElement> = ({
-    target,
-  }) => {
-    setPassword(target.value);
+    const request = async () => {
+      const request = action === "login" ? logIn : register;
+      const { data: token } = await request(login, password);
+      localStorage.setItem("token", token);
+      decodeToken(token);
+      history.push("/admin");
+    };
+    const error = await tryRequest(request);
+    if (error) setErrors([error]);
   };
 
   return (
     <div>
       <h2>{action}</h2>
-      <form onSubmit={handleSubmit} /*autoComplete="off"*/>
-        <p className="error-msg">{error}</p>
+      <form onSubmit={handleSubmit}>
+        <ErrorList errors={errors} />
         <Input
           name="login"
           type="text"
           value={login}
-          onChange={handleChangeLogin}
-          validation={{ required: true, minLength: 5, maxLength: 50 }}
+          onChange={(e) => setLogin(e.target.value)}
+          onBlur={validate("login")}
         />
         <Input
           name="password"
-          type="text"
+          type="password"
           value={password}
-          onChange={handleChangePassword}
-          validation={{ required: true, minLength: 5, maxLength: 100 }}
+          onChange={(e) => setPassword(e.target.value)}
+          onBlur={validate("password")}
         />
-        <button type="submit">Submit</button>
+        <button disabled={shouldDisableSubmit()} type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

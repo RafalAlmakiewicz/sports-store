@@ -4,12 +4,12 @@ import CartItemRow from "./cartItemRow";
 
 const Cart = () => {
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart") as string) as CartItem[] //!!!
+    JSON.parse(localStorage.getItem("cart") as string) as CartItem[]
   );
 
   useEffect(() => {
     const body = document.querySelector("body");
-    if (!body) return; //!!!
+    if (!body) return;
     body.classList.add("dark");
     localStorage.setItem("cart", JSON.stringify(cart));
   });
@@ -17,7 +17,7 @@ const Cart = () => {
   const handleQuantityChange = (id: string, quantity: number) => {
     const tempCart = [...cart];
     const product = tempCart.find((product) => product._id === id);
-    if (!product) throw Error("product is missing from cart"); //!!!
+    if (!product) throw Error("product is missing from cart");
     const index = tempCart.indexOf(product);
     const tempProduct = { ...product };
     tempProduct.quantity = quantity;
@@ -36,13 +36,14 @@ const Cart = () => {
     for (let product of cart) {
       total += product.price * product.quantity;
     }
-    return total;
+    return `${total}$`;
   };
 
   return cart.length === 0 ? (
     <h2>Cart is empty</h2>
   ) : (
     <div className="admin-panel">
+      <h2>Cart</h2>
       <table>
         <thead>
           <tr>
@@ -74,98 +75,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-/**import { useEffect, useState } from "react";
-import Counter from "./counter";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CartItem } from "../types";
-
-const Cart = () => {
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart") as string) as CartItem[] //!!!
-  );
-
-  useEffect(() => {
-    const body = document.querySelector("body");
-    if (!body) return; //!!!
-    body.classList.add("dark");
-    localStorage.setItem("cart", JSON.stringify(cart));
-  });
-
-  const handleQuantityChange = (quantity: number, id: string) => {
-    const tempCart = [...cart];
-    const product = tempCart.find((p) => p._id === id);
-    if (!product) throw Error("product is missing from cart"); //!!!
-    const index = tempCart.indexOf(product);
-    const tempProduct = { ...product };
-    tempProduct.quantity = quantity;
-    tempCart[index] = tempProduct;
-    console.log(JSON.stringify(tempCart));
-    setCart(tempCart);
-  };
-
-  const handleRemove = (id: string) => {
-    const tempCart = cart.filter((p) => p._id !== id);
-    setCart(tempCart);
-  };
-
-  let total = 0;
-  const getSubtotal = (price: number, quantity: number) => {
-    const sub = price * quantity;
-    total += sub;
-    return sub;
-  };
-
-  return cart.length === 0 ? (
-    <h2>Cart is empty</h2>
-  ) : (
-    <div className="admin-panel">
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Stock</th>
-            <th>Subtotal</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.map((p) => (
-            <tr key={p._id}>
-              <td>{p.name}</td>
-              <td>{p.price}</td>
-              <td>
-                <Counter
-                  count={p.quantity}
-                  set={handleQuantityChange}
-                  min={1}
-                  max={p.stock}
-                  id={p._id}
-                />
-              </td>
-              <td>{p.stock}</td>
-              <td>{getSubtotal(p.price, p.quantity) + "$"}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleRemove(p._id);
-                  }}
-                >
-                  <FontAwesomeIcon icon="trash" />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="cart-buy">
-        <p>{total + "$"}</p>
-        <button className="btn btn-secondary">Buy</button>
-      </div>
-    </div>
-  );
-};
-
-export default Cart; */

@@ -16,7 +16,7 @@ const ActivityFilter = ({ value, handleChange }: ActivityFilterProps) => {
       valueProp="_id"
       textProp="name"
       value={value}
-      handleChange={handleChange}
+      onChange={handleChange}
       textForFirstOption="All activities"
     />
   );

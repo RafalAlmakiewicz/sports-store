@@ -1,14 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import ApiCaller from "../ApiCaller";
-import { apiEndpoint } from "../apiEndpoint";
+import { createContext, useContext, useMemo, useState } from "react";
 import { Activity } from "../types";
+import { useApi } from "./apiContext";
 
 interface ActivitiesContext {
   activities: Activity[];
@@ -28,20 +20,12 @@ export const ActivitiesProvider = ({
   children: React.ReactNode;
 }) => {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const { activitiesApi } = useApi();
 
-  const activitiesApi = useRef(
-    new ApiCaller<Activity>(`${apiEndpoint}/activities`)
-  );
-
-  const getAllActivities = () => {
-    activitiesApi.current.getAll().then((activities) => {
-      setActivities(activities);
-    });
+  const getAllActivities = async () => {
+    let data = await activitiesApi.getAll();
+    setActivities(data);
   };
-
-  useEffect(() => {
-    getAllActivities();
-  }, []);
 
   const value = useMemo(() => {
     return {

@@ -1,26 +1,16 @@
 import React from "react";
 
-interface InputProps {
-  id?: string;
-  type: string;
-  name?: string;
-  validation?: {};
-  defaultValue?: string | number;
-  value?: string | number;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  placeholder?: string;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  checked?: boolean;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { id, label, name, validation, ...rest } = props;
+const Input = ({ id, label, name, ...restProps }: InputProps) => {
   return (
     <div>
-      <label htmlFor={name}>{label || name}</label>
-      <input ref={ref} id={id || name} name={name} {...validation} {...rest} />
+      <label htmlFor={id || name}>{label || name}</label>
+      <input id={id || name} name={name} {...restProps} />
     </div>
   );
-});
+};
 
 export default Input;
