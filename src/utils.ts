@@ -2,9 +2,6 @@ import { AxiosError } from "axios";
 import images from "./images/images";
 import { Product } from "./types";
 
-export const firstLetterToUpper = (s: string) =>
-  s.charAt(0).toUpperCase() + s.substring(1);
-
 export const sortProducts = (
   products: Product[],
   orderName: string,
@@ -68,14 +65,6 @@ export const getImagePath = (productName: string) => {
   return (images as { [prop: string]: string })[productName.replace(/ /g, "")];
 };
 
-export const matchesPriceFormat = (value: string) => {
-  return !!value.match(/^\d*\.\d{2}$/);
-};
-
-export const matchesInteger = (value: string) => {
-  return !!value.match(/^\d*$/);
-};
-
 export const formatPrice = (value: string) => {
   value = padEndZerosToDecimalPart(value, 2);
   return (+value).toFixed(2);
@@ -84,14 +73,6 @@ export const formatPrice = (value: string) => {
 export const padEndZerosToDecimalPart = (value: string, max: number) => {
   if (value.split(".").length === 1) value += ".";
   return value.split(".")[0] + "." + value.split(".")[1].padEnd(max, "0");
-};
-
-export const removeLeadingZeros = (value: number) => {
-  return +value.toString().replace(/^0+/, "");
-};
-
-export const formatInteger = (value: string) => {
-  return removeLeadingZeros(Math.round(+value));
 };
 
 export const tryRequest = async (request: Function, args?: unknown) => {

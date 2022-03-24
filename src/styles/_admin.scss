@@ -46,12 +46,25 @@
 
 /*product form*/
 
-form {
+/*form {
   display: flex;
   flex-direction: column;
   align-content: center;
   gap: 1rem;
   width: 18rem;
+}*/
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 1rem;
+  //width: 18rem;
+
+  input,
+  button {
+    width: 18rem;
+  }
 }
 
 ///cart

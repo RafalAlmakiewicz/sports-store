@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { apiEndpoint } from "../apiEndpoint";
+import { apiEndpoint } from "./apiEndpoint";
 import { User } from "../types";
 
 const login = async (login: string, password: string) => {

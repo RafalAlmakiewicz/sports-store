@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from "react";
 import { Activity, Product } from "../types";
 import EntityApi from "../api/EntityApi";
-import { apiEndpoint } from "../apiEndpoint";
+import { apiEndpoint } from "../api/apiEndpoint";
 import authApi from "../api/authApi";
 import resetDatabase from "../api/resetDbApi";
 

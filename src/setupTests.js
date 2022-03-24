@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import createAxiosMock from "./tests/createAxiosMock";
+import createAxiosMock from "./testUtils/createAxiosMock";
 
 beforeAll(() => {
   createAxiosMock();
