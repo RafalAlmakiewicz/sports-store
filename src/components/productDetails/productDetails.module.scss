@@ -1,0 +1,113 @@
+@import "../../styles/variables";
+
+.details {
+  display: grid;
+  grid-template-columns: 30rem 25rem;
+  grid-template-rows: auto auto auto 1fr auto auto;
+  margin: auto;
+  place-content: center;
+  gap: 1rem 1.5rem;
+  grid-template-areas:
+    " back notification"
+    " image name"
+    " image price"
+    " image description"
+    "image counter"
+    " image cart";
+  position: relative;
+
+  .notification {
+    grid-area: notification;
+    height: 3rem;
+    background: #444;
+    display: flex;
+    align-items: center;
+    box-shadow: $shadow;
+    transition: opacity 2s;
+
+    a {
+      justify-self: stretch;
+      flex-grow: 1;
+
+      &:hover {
+        background: linear-gradient(to right, #333, #555);
+      }
+    }
+
+    button {
+      box-shadow: none;
+      background: rgb(100, 13, 13);
+
+      &:hover {
+        background: linear-gradient(
+          to right,
+          rgb(100, 13, 13),
+          rgb(138, 17, 17)
+        );
+      }
+    }
+  }
+
+  .back {
+    grid-area: back;
+    margin-bottom: 2.5rem;
+    justify-self: stretch;
+  }
+
+  .image {
+    grid-area: image;
+    height: 45rem;
+    background: #444;
+    display: grid;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    svg {
+      height: 20%;
+      width: 20%;
+      place-self: center;
+    }
+  }
+
+  .price {
+    grid-area: price;
+    justify-self: start;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .counter {
+    grid-area: counter;
+    justify-self: start;
+  }
+
+  .cart {
+    grid-area: cart;
+  }
+
+  .description {
+    grid-area: description;
+    align-self: start;
+    border-top: $border;
+  }
+
+  @media (max-width: $small) {
+    grid-template-columns: 30rem;
+    grid-template-rows: none;
+    grid-template-areas:
+      "back "
+      "image"
+      "name"
+      " price"
+      " description"
+      "counter"
+      " cart"
+      "notification";
+  }
+}

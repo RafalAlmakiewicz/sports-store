@@ -1,0 +1,25 @@
+@import "../../../styles//variables";
+
+.counter {
+  display: flex;
+  box-shadow: $shadow;
+
+  p {
+    border-bottom: $border-light;
+    border-top: $border-light;
+    width: 4rem;
+    background: $c-neutral-6;
+    display: grid;
+    place-content: center;
+  }
+
+  button {
+    border: $border-light;
+    background: $c-neutral-6;
+    box-shadow: none;
+
+    &:hover {
+      background: $c-neutral-4;
+    }
+  }
+}

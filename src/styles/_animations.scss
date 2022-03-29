@@ -1,0 +1,18 @@
+.fade {
+  animation: fade 0.6s ease-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+}

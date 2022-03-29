@@ -1,0 +1,11 @@
+@import "../../../styles//variables";
+
+.searchBox {
+  position: relative;
+
+  svg {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartItem } from "../../types";
+import styles from "./productDetails.module.scss";
 
 interface AddToCartProps {
   itemToAdd: CartItem;
@@ -37,10 +38,13 @@ const AddToCart = ({ itemToAdd, onClose }: AddToCartProps) => {
   }, []);
 
   return (
-    <div>
-      <p>Item added to cart.</p>
-      <Link to="/cart">Go to Cart</Link>
-      <button onClick={onClose}>[X]</button>
+    <div className={styles.notification}>
+      <Link className="btn" to="/cart">
+        Go to Cart
+      </Link>
+      <button className="btn" onClick={onClose}>
+        [X]
+      </button>
     </div>
   );
 };

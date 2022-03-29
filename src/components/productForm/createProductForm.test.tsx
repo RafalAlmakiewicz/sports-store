@@ -115,7 +115,7 @@ describe("create product form", () => {
       await findByRole("heading", { name: /admin panel/i })
     ).toBeInTheDocument();
     expect(
-      getByRole("row", { name: /diving fins 300 1 swimming/i })
+      getByRole("row", { name: /diving fins 300.00\$ 1 swimming/i })
     ).toBeInTheDocument();
   });
 });

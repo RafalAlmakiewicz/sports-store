@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { CartItem } from "../../types";
 import CartItemRow from "./cartItemRow";
+import styles from "./cart.module.scss";
+import formatPrice from "../../utils/formatPrice";
 
 const Cart = () => {
   const [cart, setCart] = useState(
@@ -8,9 +10,6 @@ const Cart = () => {
   );
 
   useEffect(() => {
-    const body = document.querySelector("body");
-    if (!body) return;
-    body.classList.add("dark");
     localStorage.setItem("cart", JSON.stringify(cart));
   });
 
@@ -26,23 +25,38 @@ const Cart = () => {
     setCart(tempCart);
   };
 
-  const handleRemove = (id: string) => () => {
+  const handleRemove = (id: string) => {
     const tempCart = cart.filter((product) => product._id !== id);
     setCart(tempCart);
   };
 
-  const getTotal = () => {
+  const getTotalPrice = () => {
     let total = 0;
     for (let product of cart) {
       total += product.price * product.quantity;
     }
-    return `${total}$`;
+    return formatPrice(total);
+  };
+
+  const TotalPriceRow = () => {
+    return (
+      <tr className={styles.totalRow}>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{getTotalPrice()}</td>
+        <td></td>
+      </tr>
+    );
   };
 
   return cart.length === 0 ? (
-    <h2>Cart is empty</h2>
+    <div className={styles.cart}>
+      <h2>Cart is empty</h2>
+    </div>
   ) : (
-    <div className="admin-panel">
+    <div className={styles.cart}>
       <h2>Cart</h2>
       <table>
         <thead>
@@ -64,12 +78,9 @@ const Cart = () => {
               handleQuantityChange={handleQuantityChange}
             />
           ))}
+          <TotalPriceRow />
         </tbody>
       </table>
-      <div className="cart-buy">
-        <p>{getTotal()}</p>
-        <button className="btn btn-secondary">Buy</button>
-      </div>
     </div>
   );
 };

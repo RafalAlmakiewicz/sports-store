@@ -1,0 +1,30 @@
+@import "../../../styles//variables";
+
+.footer {
+  background: $c-neutral-9;
+  font-size: 1.2rem;
+  section {
+    border-left: 1px solid $c-neutral-5;
+    margin: 1rem 5rem;
+    padding-left: 1rem;
+  }
+
+  h2 {
+    font-size: inherit;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  ul {
+    font-size: inherit;
+  }
+
+  a {
+    color: red;
+    font-size: 1.2rem;
+  }
+
+  a:visited {
+    color: purple;
+  }
+}

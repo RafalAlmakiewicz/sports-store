@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.cart {
+  @include underlineHeading;
+
+  table {
+    table-layout: fixed;
+    margin: auto;
+    border-spacing: 0 1rem;
+
+    tr {
+      box-shadow: $shadow;
+    }
+
+    thead > tr,
+    button[aria-label="remove from cart"] {
+      box-shadow: none;
+    }
+
+    th,
+    td {
+      padding: 0.2rem 1.2rem;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tbody tr {
+      background: $c-neutral-6;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
-import Products from "./products";
+import Products from "./productsList/productsList";
 import TestApp from "../../testUtils/testApp";
 
 const {
@@ -25,8 +25,8 @@ describe("filters sidebar functionalities", () => {
   it("displays products", async () => {
     expect(getByText(/goggles/i)).toBeInTheDocument();
     expect(getByText(/barbell/i)).toBeInTheDocument();
-    expect(getByText("10$")).toBeInTheDocument();
-    expect(getByText("200$")).toBeInTheDocument();
+    expect(getByText("10.00$")).toBeInTheDocument();
+    expect(getByText("200.00$")).toBeInTheDocument();
   });
 
   it("filters products after typing in search bar", () => {

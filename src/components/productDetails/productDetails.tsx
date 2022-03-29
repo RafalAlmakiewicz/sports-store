@@ -1,10 +1,12 @@
 import { useState } from "react";
 import AddToCart from "./addToCart";
-import Counter from "../reusable/counter";
+import Counter from "../reusable/counter/counter";
 import { Link } from "react-router-dom";
-import { getImagePath } from "../../utils";
+import formatPrice from "../../utils/formatPrice";
 import { Redirect, useParams } from "react-router";
 import { useProducts } from "../../contexts/productsContext";
+import styles from "./productDetails.module.scss";
+import ProductImage from "../productImage/productImage";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -19,8 +21,8 @@ const ProductDetails = () => {
     return <Redirect to="/notFound" />;
   } else
     return (
-      <div className="details">
-        <Link className="details-back btn btn-primary" to="/">
+      <div className={styles.details}>
+        <Link className={`${styles.back} btn btn-primary`} to="/">
           back
         </Link>
         {showNotification && (
@@ -29,26 +31,26 @@ const ProductDetails = () => {
             onClose={() => setShowNotification(false)}
           />
         )}
-        <div className="details-image">
-          <img src={getImagePath(product.name)} alt={product.name} />
+        <div className={styles.image}>
+          <ProductImage productName={product.name} />
         </div>
-        <h2 className="details-name">{product.name}</h2>
-        <p className="details-price">{product.price}$</p>
+        <h2 className={styles.name}>{product.name}</h2>
+        <p className={styles.price}>{formatPrice(product.price)}</p>
 
         <Counter
-          className="details-counter"
+          className={styles.counter}
           count={quantity}
           handleClick={handleClickCounter}
           min={1}
           max={product.stock}
         />
         <button
-          className="details-cart btn btn-primary"
+          className={`${styles.cart} btn-primary`}
           onClick={() => setShowNotification(true)}
         >
           Add to cart
         </button>
-        <p className="details-description">{product.description}</p>
+        <p className={styles.description}>{product.description}</p>
       </div>
     );
 };

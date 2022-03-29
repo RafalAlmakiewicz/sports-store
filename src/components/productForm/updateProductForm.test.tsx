@@ -62,7 +62,7 @@ describe("update product form", () => {
       await findByRole("heading", { name: /admin panel/i })
     ).toBeInTheDocument();
     expect(
-      getByRole("row", { name: "updated name 10 20 Swimming" })
+      getByRole("row", { name: /updated name 10.00\$ 20 Swimming/i })
     ).toBeInTheDocument();
   });
 

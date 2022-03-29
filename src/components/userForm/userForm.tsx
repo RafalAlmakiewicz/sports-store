@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Input from "../reusable/Input";
+import Input from "../reusable/input/input";
 import { useHistory } from "react-router";
 import { useUser } from "../../contexts/userContext";
 import { useValidation } from "../../hooks/useValidation";
-import ErrorList from "../reusable/ErrorList";
-import { tryRequest } from "../../utils";
+import ErrorList from "../reusable/errorsList/errorsList";
+import tryRequest from "../../utils/tryRequest";
+import styles from "./userForm.module.scss";
 
 interface UserFormProps {
   action: "register" | "login";
@@ -62,8 +63,14 @@ const UserForm = ({ action }: UserFormProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.form}>
       <h2>{action}</h2>
+      <p>
+        Hello! Part of my app's functionalites are availible only after logging
+        in. Login as default user - <mark>login: user1, pasword: 12345</mark>,
+        or register a new user, to access admin panel which allows to create,
+        update and delete products.
+      </p>
       <form onSubmit={handleSubmit}>
         <ErrorList errors={errors} />
         <Input
@@ -80,7 +87,11 @@ const UserForm = ({ action }: UserFormProps) => {
           onChange={(e) => setPassword(e.target.value)}
           onBlur={validate("password")}
         />
-        <button disabled={shouldDisableSubmit()} type="submit">
+        <button
+          className="btn-primary"
+          disabled={shouldDisableSubmit()}
+          type="submit"
+        >
           Submit
         </button>
       </form>

@@ -1,1 +1,1 @@
-export const apiEndpoint = "http://localhost:5000/SportsStore/api";
+export const apiEndpoint = "https://sportify-7.herokuapp.com/sportsstore/api";

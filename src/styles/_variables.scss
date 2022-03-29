@@ -1,0 +1,31 @@
+$c-neutral-1: #ddd;
+$c-neutral-2: #ccc;
+$c-neutral-3: #bbb;
+$c-neutral-4: #aaa;
+$c-neutral-5: #999;
+$c-neutral-6: #444;
+$c-neutral-7: #333;
+$c-neutral-8: #292929;
+$c-neutral-9: #252525;
+$c-neutral-10: #222;
+
+$c-transparent-light: rgba(255, 255, 255, 0.5);
+$c-transparent: rgba(0, 0, 0, 0.2);
+
+$c-primary-light: #07bebe;
+$c-primary: teal;
+
+$small: 580px;
+$medium: 750px;
+
+$border-light: 1px solid $c-transparent-light;
+$border: 1px solid $c-neutral-3;
+
+$shadow: 2px 2px 8px -0px $c-neutral-10;
+
+@mixin underlineHeading {
+  h2 {
+    border-bottom: 1px solid white;
+    margin-bottom: 3rem;
+  }
+}

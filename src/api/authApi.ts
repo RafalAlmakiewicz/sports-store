@@ -1,7 +1,5 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { apiEndpoint } from "./apiEndpoint";
-import { User } from "../types";
 
 const login = async (login: string, password: string) => {
   return await axios.post(`${apiEndpoint}/auth`, { login, password });

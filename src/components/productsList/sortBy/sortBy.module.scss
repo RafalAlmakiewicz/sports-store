@@ -1,0 +1,7 @@
+.order > div {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}

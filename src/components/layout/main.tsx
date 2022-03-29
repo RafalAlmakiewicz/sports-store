@@ -1,4 +1,4 @@
-import Products from "../productsList/products";
+import Products from "../productsList/productsList/productsList";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ProductDetails from "../productDetails/productDetails";
 import Cart from "../cart/cart";

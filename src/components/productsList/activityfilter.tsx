@@ -1,6 +1,6 @@
 import React from "react";
 import { useActivities } from "../../contexts/activitiesContext";
-import Select from "../reusable/select";
+import Select from "../reusable/select/select";
 
 interface ActivityFilterProps {
   value: string;

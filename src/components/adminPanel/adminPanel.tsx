@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProducts } from "../../contexts/productsContext";
 import { useApi } from "../../contexts/apiContext";
-import ErrorList from "../reusable/ErrorList";
-import { tryRequest } from "../../utils";
+import ErrorList from "../reusable/errorsList/errorsList";
+import tryRequest from "../../utils/tryRequest";
+import styles from "./adminPanel.module.scss";
+import AdminPanelRow from "./adminPanelRow";
 
 const AdminPanel = () => {
   const { products, deleteProduct, getAllProducts } = useProducts();
   const { resetDatabase } = useApi();
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const body = document.querySelector("body");
-    if (!body) return;
-    body.classList.add("dark");
-  }, []);
 
   const SetDbToDefaulData = async () => {
     let error = await tryRequest(resetDatabase);
@@ -26,7 +21,7 @@ const AdminPanel = () => {
     }
   };
 
-  const handleDeleteProduct = (id: string) => async () => {
+  const handleDeleteProduct = async (id: string) => {
     if (products.length === 1) {
       setError("Must contain at least 1 product");
       return;
@@ -36,13 +31,17 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="admin-panel">
+    <div className={styles.panel}>
       <h2>Admin Panel</h2>
-      <div className="admin-panel-actions">
-        <button className="btn btn-secondary" onClick={SetDbToDefaulData}>
+      <p>
+        I encourage to try create, update and delete products, and then data can
+        be restored with button below.
+      </p>
+      <div className={styles.actions}>
+        <button className="btn-primary" onClick={SetDbToDefaulData}>
           Set database to default data
         </button>
-        <Link className="btn btn-secondary" to="/productForm">
+        <Link className="btn btn-primary" to="/productForm">
           New Item
         </Link>
       </div>
@@ -60,26 +59,11 @@ const AdminPanel = () => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>{product.stock}</td>
-              <td>{product.activity.name}</td>
-              <td>
-                <Link to={`/productForm/${product._id}`} data-testid="update">
-                  <FontAwesomeIcon icon="edit" />
-                </Link>
-              </td>
-              <td>
-                <button
-                  data-testid="delete"
-                  type="button"
-                  onClick={handleDeleteProduct(product._id)}
-                >
-                  <FontAwesomeIcon icon="trash" />
-                </button>
-              </td>
-            </tr>
+            <AdminPanelRow
+              key={product._id}
+              product={product}
+              handleDeleteProduct={handleDeleteProduct}
+            />
           ))}
         </tbody>
       </table>

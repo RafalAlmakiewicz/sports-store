@@ -1,0 +1,58 @@
+@import "../../styles/variables";
+
+.panel {
+  @include underlineHeading;
+
+  .actions {
+    display: flex;
+    gap: 5rem;
+    margin-bottom: 3rem;
+  }
+
+  td:first-child {
+    font-weight: 500;
+    border-right: $border-light;
+    background: $c-neutral-7;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  table {
+    table-layout: fixed;
+    margin: auto;
+    border-spacing: 0 1rem;
+
+    tr {
+      box-shadow: $shadow;
+    }
+
+    th,
+    td {
+      padding: 0.2rem 1.2rem;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tbody tr {
+      background: $c-neutral-6;
+    }
+
+    svg {
+      background: inherit;
+      color: white;
+    }
+
+    thead > tr,
+    button[aria-label="delete product"] {
+      box-shadow: none;
+    }
+  }
+
+  p {
+    font-size: 1.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+}

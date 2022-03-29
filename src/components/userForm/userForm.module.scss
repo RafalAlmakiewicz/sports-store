@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+
+.form {
+  @include underlineHeading;
+
+  p {
+    font-size: 1.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+
+    mark {
+      background: rgba(0, 120, 240, 0.7);
+    }
+  }
+}

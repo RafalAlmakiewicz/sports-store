@@ -25,7 +25,7 @@ describe("product details page", () => {
     const goToCartLink = getByRole("link", { name: /go to cart/i });
     userEvent.click(goToCartLink);
     const addedCartItem = getByRole("row", {
-      name: "prod-name goggles 10 - 2 + 20 20$",
+      name: "prod-name goggles 10.00$ - 2 + 20 20.00$",
     });
     expect(addedCartItem).toBeInTheDocument();
   });

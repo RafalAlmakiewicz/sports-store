@@ -1,0 +1,43 @@
+import Select from "../../reusable/select/select";
+import RadioGroup from "../../reusable/radioGroup";
+import styles from "./sortBy.module.scss";
+
+interface SortByProps {
+  order: string;
+  value: string;
+  handleChangeOrder: React.ChangeEventHandler<HTMLInputElement>;
+  handleChangeValue: React.ChangeEventHandler<HTMLSelectElement>;
+}
+
+const SortBy = ({
+  order,
+  value,
+  handleChangeOrder,
+  handleChangeValue,
+}: SortByProps) => {
+  const items = [{ name: "price" }, { name: "name" }];
+  const buttons = [{ id: "ascending" }, { id: "descending" }];
+
+  return (
+    <>
+      <Select
+        label="Sort by"
+        name="sortValue"
+        items={items}
+        valueProp="name"
+        textProp="name"
+        value={value}
+        onChange={handleChangeValue}
+      />
+      <RadioGroup
+        className={styles.order}
+        buttons={buttons}
+        name="sortOrder"
+        selectedValue={order}
+        handleChange={handleChangeOrder}
+      />
+    </>
+  );
+};
+
+export default SortBy;

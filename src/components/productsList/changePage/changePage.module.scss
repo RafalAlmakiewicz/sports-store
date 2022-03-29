@@ -1,0 +1,33 @@
+@import "../../../styles//variables";
+
+.changePage {
+  box-shadow: $shadow;
+  grid-area: navigation;
+  align-self: start;
+  background: $c-neutral-8;
+  padding: 2rem;
+  max-width: 20rem;
+  display: flex;
+
+  @media (max-width: $medium) {
+    justify-self: center;
+  }
+
+  button {
+    width: 3rem;
+    height: 3rem;
+    margin: 0.1rem;
+
+    &:not(.arrow):not(.active) {
+      border: 0;
+    }
+  }
+}
+
+.arrow {
+  border: 1px solid white;
+}
+
+.active {
+  border: 1px solid $c-primary;
+}
