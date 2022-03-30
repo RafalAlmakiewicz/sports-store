@@ -1,27 +1,40 @@
 # Sportify
 
-Simple sports equipment online store. Written in `React`. Styled with `Scss`. Backend services can be found in a separate repository – [Sports-store-api](https://github.com/RafalAlmakiewicz/sports-store-api).
+Sports equipment online store. Written using `React` and `Typescript`. Styled with `Scss`. Tested using `Jest` and `React Testing Library`. Backend api which uses `Express` can be found in a separate repository – [Sports-store-api](https://github.com/RafalAlmakiewicz/sports-store-api).
 
-## Goals
+## Hosting live on Vercel
 
-- getting familiar with React
-- practicing creating responsive layouts
-- practicing writing [stylesheets](https://github.com/RafalAlmakiewicz/sports-store/tree/master/src/styles) with Scss
+https://sportify-pi.vercel.app
 
 ## Features
 
-### Home page
+![home](https://user-images.githubusercontent.com/79459373/160728969-d84729d1-c09a-4100-a626-f8e8886b2262.png)
 
-Browsing products. Sidebar lets user search by name, set price range, change sorting order and filter by activity.
+### Fullstack app
 
-![home](https://user-images.githubusercontent.com/79459373/146261885-d0880cac-73f6-4816-accb-b916a9d6de8a.png)
-![details](https://user-images.githubusercontent.com/79459373/146262053-0f18ee7c-d705-44ef-a7d7-c3e90fbdf2dc.png)
-![details-small](https://user-images.githubusercontent.com/79459373/146262056-f691b628-aa7f-4a90-b972-5edf0fffea84.png)
-![home-sort](https://user-images.githubusercontent.com/79459373/146261924-30a9d1c1-0470-478d-a22b-c469e4b096e4.png)
+App comunicates with node api, which persists data using MongoDb.
+
+### Browsing products
+
+Sidebar lets user search by name, set price range, change sorting order and filter by activity.
+
+### Authentication
+
+Forms to log in and register. Some routes are protected from unauthenticated users.
 
 ### Admin panel
 
 Creating, updating and deleting products.
 
-![admin](https://user-images.githubusercontent.com/79459373/146262128-b8623504-85c4-4163-90bd-968d623948f0.png)
-![form](https://user-images.githubusercontent.com/79459373/146262242-ead7850f-7c36-4953-9bf3-410d0f1f5f2d.png)
+### Cart
+
+Shopping cart which persists data in LocalStorage.
+
+## Skills I learned/improved
+
+- React
+- Typescript
+- responsive layouts
+- REST
+- css modules
+- testing with Jest and RTL
