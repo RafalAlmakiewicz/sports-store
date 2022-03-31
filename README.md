@@ -6,6 +6,12 @@ Sports equipment online store. Written using `React` and `Typescript`. Styled wi
 
 https://sportify-pi.vercel.app
 
+## Set up locally
+
+(Developed with node v14 and Create React App)
+
+Clone repository. In the root folder run `npm install`, then `npm start`
+
 ## Features
 
 ![home](https://user-images.githubusercontent.com/79459373/160728969-d84729d1-c09a-4100-a626-f8e8886b2262.png)
