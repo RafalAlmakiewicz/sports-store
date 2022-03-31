@@ -1,1 +1,1 @@
-export const apiEndpoint = "https://sportify-7.herokuapp.com/sportsstore/api";
+export const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
