@@ -6,11 +6,11 @@ interface ImageProps {
   alt: string;
 }
 
-function Image(props: ImageProps) {
+function Image({ src, alt }: ImageProps) {
   const [error, setError] = useState(false);
 
   if (error) return <FontAwesomeIcon icon="file-image" />;
-  return <img {...props} onError={() => setError(true)} />;
+  return <img src={src} alt={alt} onError={() => setError(true)} />;
 }
 
 export default Image;

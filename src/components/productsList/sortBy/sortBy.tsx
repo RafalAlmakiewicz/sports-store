@@ -1,4 +1,4 @@
-import Select from "../../reusable/select/select";
+import Select from "../../reusable/select";
 import RadioGroup from "../../reusable/radioGroup";
 import styles from "./sortBy.module.scss";
 

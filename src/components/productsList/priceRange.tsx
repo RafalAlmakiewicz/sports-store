@@ -1,4 +1,4 @@
-import Input from "../reusable/input/input";
+import Input from "../reusable/input";
 
 interface PriceRangeProps {
   minPrice: number;

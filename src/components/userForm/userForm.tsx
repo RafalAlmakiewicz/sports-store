@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Input from "../reusable/input/input";
+import Input from "../reusable/input";
 import { useHistory } from "react-router";
 import { useUser } from "../../contexts/userContext";
 import { useValidation } from "../../hooks/useValidation";
@@ -38,7 +38,7 @@ const UserForm = ({ action }: UserFormProps) => {
     reset();
     setLogin("");
     setPassword("");
-  }, [action]);
+  }, [action, reset]);
 
   const validate = (touchedFieldName: string) => () => {
     validateAllTouched(touchedFieldName, [

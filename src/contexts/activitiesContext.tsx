@@ -22,18 +22,18 @@ export const ActivitiesProvider = ({
   const [activities, setActivities] = useState<Activity[]>([]);
   const { activitiesApi } = useApi();
 
-  const getAllActivities = async () => {
-    let data = await activitiesApi.getAll();
-    setActivities(data);
-  };
-
   const value = useMemo(() => {
+    const getAllActivities = async () => {
+      let data = await activitiesApi.getAll();
+      setActivities(data);
+    };
+
     return {
       activities,
       setActivities,
       getAllActivities,
     };
-  }, [activities]);
+  }, [activities, activitiesApi]);
 
   return (
     <activitiesContext.Provider value={value}>

@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./select.module.scss";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
@@ -22,12 +21,7 @@ const Select = ({
   return (
     <div>
       <label htmlFor={id || name}>{label || name}</label>
-      <select
-        //className={styles.select}
-        id={id || name}
-        name={name}
-        {...restProps}
-      >
+      <select id={id || name} name={name} {...restProps}>
         <option key="0" value="">
           {textForFirstOption}
         </option>

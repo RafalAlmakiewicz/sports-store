@@ -13,7 +13,7 @@ const Counter = ({ count, handleClick, min, max, className }: CounterProps) => {
     <div className={`${styles.counter} ${className}`}>
       <button
         className="btn-primary"
-        disabled={count == min}
+        disabled={count === min}
         onClick={handleClick(count - 1)}
       >
         -
@@ -21,7 +21,7 @@ const Counter = ({ count, handleClick, min, max, className }: CounterProps) => {
       <p>{count}</p>
       <button
         className="btn-primary"
-        disabled={count == max}
+        disabled={count === max}
         onClick={handleClick(count + 1)}
       >
         +

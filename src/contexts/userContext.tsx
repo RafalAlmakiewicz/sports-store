@@ -34,17 +34,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    history.push("/");
-  };
-
   useEffect(() => {
     decodeToken(localStorage.getItem("token"));
   }, []);
 
   const value = useMemo(() => {
+    const logOut = () => {
+      localStorage.removeItem("token");
+      setUser(null);
+      history.push("/");
+    };
+
     return {
       user,
       decodeToken,
@@ -52,7 +52,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       logIn: authApi.login,
       register: authApi.register,
     };
-  }, [user]);
+  }, [user, authApi, history]);
 
   return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };

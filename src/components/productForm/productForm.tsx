@@ -1,13 +1,13 @@
-import Input from "../reusable/input/input";
+import Input from "../reusable/input";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import Select from "../reusable/select/select";
+import Select from "../reusable/select";
 import { useActivities } from "../../contexts/activitiesContext";
 import { Product } from "../../types";
 import { useProducts } from "../../contexts/productsContext";
 import { Field, useValidation } from "../../hooks/useValidation";
 import ErrorList from "../reusable/errorsList/errorsList";
-import TextArea from "../reusable/textArea/textArea";
+import TextArea from "../reusable/textArea";
 import formatPrice from "../../utils/formatPrice";
 import tryRequest from "../../utils/tryRequest";
 import styles from "./productForm.module.scss";

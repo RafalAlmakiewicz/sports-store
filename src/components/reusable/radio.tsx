@@ -1,4 +1,4 @@
-import Input from "./input/input";
+import Input from "./input";
 
 interface RadioProps {
   value?: string;

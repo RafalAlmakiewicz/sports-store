@@ -28,28 +28,28 @@ const Loader = ({ children }: { children: JSX.Element }) => {
   const { activities, getAllActivities } = useActivities();
   const [error, setError] = useState("");
 
-  const initializeCart = () => {
-    if (!localStorage.getItem("cart")) localStorage.setItem("cart", "[]");
-  };
-
-  const checkDataIsLoaded = () => {
-    setDataIsLoaded(products.length > 0 && activities.length > 0);
-  };
-
-  const initializeData = () => {
-    Promise.all([getAllProducts(), getAllActivities()]).catch((error) => {
-      if (!error.response) {
-        setError("Error: server did not respond.");
-      } else setError(error.response.data);
-    });
-  };
-
   useEffect(() => {
-    initializeCart();
+    const initializeData = () => {
+      Promise.all([getAllProducts(), getAllActivities()]).catch((error) => {
+        if (!error.response) {
+          setError("Error: server did not respond.");
+        } else setError(error.response.data);
+      });
+    };
     initializeData();
   }, []);
 
   useEffect(() => {
+    const initializeCart = () => {
+      if (!localStorage.getItem("cart")) localStorage.setItem("cart", "[]");
+    };
+    initializeCart();
+  }, []);
+
+  useEffect(() => {
+    const checkDataIsLoaded = () => {
+      setDataIsLoaded(products.length > 0 && activities.length > 0);
+    };
     checkDataIsLoaded();
   }, [products, activities]);
 

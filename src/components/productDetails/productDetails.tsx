@@ -15,44 +15,42 @@ const ProductDetails = () => {
   const { products } = useProducts();
   let product = products.find((product) => product._id === id);
 
+  if (!product) return <Redirect to="/notFound" />;
+
   const handleClickCounter = (count: number) => () => setQuantity(count);
-
-  if (!product) {
-    return <Redirect to="/notFound" />;
-  } else
-    return (
-      <div className={styles.details}>
-        <Link className={`${styles.back} btn btn-primary`} to="/">
-          back
-        </Link>
-        {showNotification && (
-          <AddToCart
-            itemToAdd={{ ...product, quantity }}
-            onClose={() => setShowNotification(false)}
-          />
-        )}
-        <div className={styles.image}>
-          <ProductImage productName={product.name} />
-        </div>
-        <h2 className={styles.name}>{product.name}</h2>
-        <p className={styles.price}>{formatPrice(product.price)}</p>
-
-        <Counter
-          className={styles.counter}
-          count={quantity}
-          handleClick={handleClickCounter}
-          min={1}
-          max={product.stock}
+  return (
+    <div className={styles.details}>
+      <Link className={`${styles.back} btn btn-primary`} to="/">
+        back
+      </Link>
+      {showNotification && (
+        <AddToCart
+          itemToAdd={{ ...product, quantity }}
+          onClose={() => setShowNotification(false)}
         />
-        <button
-          className={`${styles.cart} btn-primary`}
-          onClick={() => setShowNotification(true)}
-        >
-          Add to cart
-        </button>
-        <p className={styles.description}>{product.description}</p>
+      )}
+      <div className={styles.image}>
+        <ProductImage productName={product.name} />
       </div>
-    );
+      <h2 className={styles.name}>{product.name}</h2>
+      <p className={styles.price}>{formatPrice(product.price)}</p>
+
+      <Counter
+        className={styles.counter}
+        count={quantity}
+        handleClick={handleClickCounter}
+        min={1}
+        max={product.stock}
+      />
+      <button
+        className={`${styles.cart} btn-primary`}
+        onClick={() => setShowNotification(true)}
+      >
+        Add to cart
+      </button>
+      <p className={styles.description}>{product.description}</p>
+    </div>
+  );
 };
 
 export default ProductDetails;

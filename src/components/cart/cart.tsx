@@ -21,7 +21,6 @@ const Cart = () => {
     const tempProduct = { ...product };
     tempProduct.quantity = quantity;
     tempCart[index] = tempProduct;
-    console.log(JSON.stringify(tempCart));
     setCart(tempCart);
   };
 

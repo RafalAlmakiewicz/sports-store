@@ -26,29 +26,29 @@ export const ProductsProvider = ({
   const { productsApi } = useApi();
   const history = useHistory();
 
-  const getAllProducts = async () => {
-    let data = await productsApi.getAll();
-    setProducts(data);
-  };
-
-  const createProduct = async (product: Product) => {
-    let data = await productsApi.create(products, product);
-    setProducts(data);
-    history.push("/admin");
-  };
-
-  const updateProduct = async (product: Product) => {
-    let data = await productsApi.update(products, product);
-    setProducts(data);
-    history.push("/admin");
-  };
-
-  const deleteProduct = async (id: string) => {
-    let data = await productsApi.delete(products, id);
-    setProducts(data);
-  };
-
   const value = useMemo(() => {
+    const getAllProducts = async () => {
+      let data = await productsApi.getAll();
+      setProducts(data);
+    };
+
+    const createProduct = async (product: Product) => {
+      let data = await productsApi.create(products, product);
+      setProducts(data);
+      history.push("/admin");
+    };
+
+    const updateProduct = async (product: Product) => {
+      let data = await productsApi.update(products, product);
+      setProducts(data);
+      history.push("/admin");
+    };
+
+    const deleteProduct = async (id: string) => {
+      let data = await productsApi.delete(products, id);
+      setProducts(data);
+    };
+
     return {
       products,
       setProducts,
@@ -57,7 +57,7 @@ export const ProductsProvider = ({
       createProduct,
       deleteProduct,
     };
-  }, [products]);
+  }, [products, productsApi, history]);
 
   return (
     <productsContext.Provider value={value}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useValidation = (
   schema: Field[],
@@ -34,10 +34,14 @@ export const useValidation = (
     return "";
   };
 
-  const reset = () => {
-    for (let fieldName in wasTouched) wasTouched[fieldName] = false;
+  const reset = useCallback(() => {
+    setWasTouched((wasTouched) => {
+      const _wasTouched = { ...wasTouched };
+      for (let fieldName in _wasTouched) _wasTouched[fieldName] = false;
+      return _wasTouched;
+    });
     setErrors([]);
-  };
+  }, []);
 
   const validateAllTouched = (
     touchedFieldName: string,

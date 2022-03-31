@@ -9,11 +9,6 @@ const register = async (login: string, password: string) => {
   return await axios.post(`${apiEndpoint}/users`, { login, password });
 };
 
-const AuthApi: AuthApi = { login, register };
-
-interface AuthApi {
-  login: (login: string, password: string) => Promise<any>;
-  register: (login: string, password: string) => Promise<any>;
-}
+const AuthApi = { login, register };
 
 export default AuthApi;

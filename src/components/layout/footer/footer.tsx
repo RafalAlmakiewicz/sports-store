@@ -8,7 +8,11 @@ const Footer = () => {
         <ul>
           <li>
             Background created using
-            <a href="https://www.design.svgbackgrounds.com/" target="_blank">
+            <a
+              href="https://www.design.svgbackgrounds.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               {" SVGBackgrounds.com"}
             </a>
           </li>
